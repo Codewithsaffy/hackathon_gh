@@ -116,8 +116,8 @@ form.addEventListener("submit", (event) => {
         experience: experienceItems,
         summary,
     };
-    const uid = generateUniqueId();
+    // const uid = generateUniqueId();
     console.log("Form Data:", formData);
-    localStorage.setItem(uid, JSON.stringify(formData));
+    localStorage.setItem("form", JSON.stringify(formData));
     window.location.href = "resume.html";
 });
