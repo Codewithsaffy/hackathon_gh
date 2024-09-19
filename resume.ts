@@ -1,4 +1,3 @@
-
 const selectElement = <T extends HTMLElement>(selector: string): T | null =>
   document.querySelector(selector) as T | null;
 
@@ -38,7 +37,7 @@ const editFormData = (data: ResumeData): void => {
 
   const skillsForm = selectElement<HTMLDivElement>("#skills-box");
   if (skillsForm) {
-    skillsForm.innerHTML = ""; 
+    skillsForm.innerHTML = "";
     data.skills.forEach((skill) => {
       skillsForm.innerHTML += `
         <div class="flex gap-4">
@@ -57,7 +56,7 @@ const editFormData = (data: ResumeData): void => {
 
   const experienceForm = selectElement<HTMLDivElement>("#experience-box");
   if (experienceForm) {
-    experienceForm.innerHTML = ""; 
+    experienceForm.innerHTML = "";
     data.experience.forEach((exp) => {
       experienceForm.innerHTML += `
         <div class="flex flex-col gap-4">
@@ -163,7 +162,6 @@ if (resumeDataString) {
   console.error("No resume data found in localStorage.");
 }
 
-
 const editBtn = document.getElementById("edit") as HTMLButtonElement;
 
 editBtn.addEventListener("click", () => {
@@ -171,13 +169,11 @@ editBtn.addEventListener("click", () => {
   window.location.href = "generateResume.html";
 });
 
-
 const printBtn = document.getElementById("print-btn") as HTMLButtonElement;
 
 printBtn.addEventListener("click", () => {
   window.print();
 });
-
 
 const imageInput = document.getElementById("image") as HTMLInputElement;
 const profileImage = document.getElementById(
