@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title class="hidden-print">Resume Template</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link rel="stylesheet" href="/style/utilityClasses.css" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        background-color: #f5f5f5;
+        color: #333;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 20px;
+      }
+
+      .main {
+        width: 100%;
+        max-width: 800px;
+        background-color: white;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .button-main {
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 30px;
+      }
+
+      .button-main button {
+        padding: 12px 24px;
+        font-size: 1.1em;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: 10px;
+        font-weight: 600;
+      }
+
+      .button-main .edit-button {
+        background-color: #28a745;
+        color: white;
+      }
+
+      .button-main .share-button {
+        background-color: #17a2b8;
+        color: white;
+      }
+
+      .button-main .print-button {
+        background-color: #dc3545;
+        color: white;
+      }
+
+      .button-main button:hover {
+        opacity: 0.9;
+        transform: scale(1.05);
+      }
+
+      .button-main button i {
+        margin-right: 8px;
+      }
+
+      .resume-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 30px;
+        border-bottom: 2px solid #eee;
+        padding-bottom: 20px;
+      }
+
+      .profile {
+        display: flex;
+        align-items: center;
+      }
+
+      .profile label {
+        width: 140px;
+        height: 140px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background-color: #e0e0e0;
+        border: 4px solid #fff;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        overflow: hidden;
+        position: relative;
+      }
+
+      .profile img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .personal-info {
+        margin-left: 20px;
+      }
+
+      .personal-info h1 {
+        font-size: 2.4em;
+        margin-bottom: 10px;
+        color: #333;
+      }
+
+      .job-title,
+      .address,
+      .email {
+        color: #666;
+        margin-bottom: 5px;
+      }
+
+      .email i {
+        color: #007bff;
+        margin-right: 8px;
+      }
+
+      .section {
+        margin-bottom: 30px;
+      }
+
+      .section h2 {
+        font-size: 1.8em;
+        margin-bottom: 15px;
+        border-bottom: 2px solid #007bff;
+        padding-bottom: 5px;
+        color: #007bff;
+        position: relative;
+      }
+
+      .section h2::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 50px;
+        height: 2px;
+        background-color: #007bff;
+      }
+
+      .section p {
+        line-height: 1.6;
+        margin-bottom: 15px;
+        color: #555;
+      }
+
+      #skillsContainer .skill-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 15px;
+      }
+
+      .skill-bar .progress {
+        background-color: #eee;
+        border-radius: 10px;
+        height: 12px;
+        width: 75%;
+        margin-left: 10px;
+        position: relative;
+      }
+
+      .skill-bar .progress span {
+        display: block;
+        height: 100%;
+        background-color: #007bff;
+        border-radius: 10px;
+      }
+
+      .skill-bar span.print-hidden {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="main">
+      <div class="button-main">
+        <button class="edit-button hidden-print" id="edit">
+          <i class="fa fa-edit"></i>Edit
+        </button>
+        <button class="share-button hidden-print" id="share">
+          <i class="fa fa-share-alt"></i>Share
+        </button>
+        <button class="print-button hidden-print" id="print-btn">
+          <i class="fa fa-print"></i>Print
+        </button>
+      </div>
+
+      <div class="resume-header">
+        <div class="profile">
+          <label for="image">
+            <p id="profileText">Upload Image</p>
+            <img class="hidden" id="profileImage" src="" alt="" />
+          </label>
+          <input class="hidden" type="file" id="image" accept="image/*" />
+
+          <div class="personal-info">
+            <h1 id="name"></h1>
+            <p id="jobtitle" class="job-title"></p>
+            <p id="address" class="address"></p>
+            <p id="email" class="email">
+              <i class="fa fa-envelope"></i> <span></span>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>Summary</h2>
+        <p id="summary"></p>
+      </div>
+
+      <div class="section">
+        <h2>Professional Experience</h2>
+        <div id="experienceContainer"></div>
+      </div>
+
+      <div class="section">
+        <h2>Education</h2>
+        <div id="educationContainer"></div>
+      </div>
+
+      <div class="section">
+        <h2>Skills</h2>
+        <div id="skillsContainer"></div>
+      </div>
+    </div>
+
+    <script src="resume.js"></script>
+  </body>
+</html>

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Resume Builder</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link rel="stylesheet" href="/style/style.css" />
+    <link rel="stylesheet" href="/style/responcive.css" />
+    <link rel="stylesheet" href="/style/utilityClasses.css" />
+    <link rel="stylesheet" href="/style/heroSection.css" />
+    <link rel="stylesheet" href="/style/componen.css" />
+    <link rel="stylesheet" href="/style/generateResume.css" />
+  </head>
+  <body>
+    <nav class="navebar justify-between">
+      <div class="flex justify-center items-center gap-3">
+        <i class="fas fa-robot homeIcon"></i>
+        <h1 class="navTitle .h1">Resume Builder</h1>
+      </div>
+    </nav>
+
+    <!-- Main content -->
+    <section class="container">
+      <div class="subNav flex justify-between items-center">
+        <a href="index.html" class="home">
+          <i class="fa-home text-3xl fa-solid"></i>
+        </a>
+        <div class="flex gap-1">
+          <button id="back-btn" class="btn-primary btn">
+            <i class="fa-solid fa-arrow-left"></i>
+          </button>
+          <button id="next-btn" class="btn-primary btn">
+            <div class="flex gap-2 items-center justify-center">
+              <p>Next</p>
+              <i class="fa-solid fa-arrow-right"></i>
+            </div>
+          </button>
+        </div>
+      </div>
+
+      <form class="w-full relative input bg-gray-300" id="resume-form">
+        <div id="carousel-container" class="carousel-container">
+          <div id="crausel-box" class="carousel-box">
+            <div class="carousel-item personal-details flex-col">
+              <h1>Personal Details</h1>
+              <p>Please provide your personal information below.</p>
+              <div class="personal-input flex flex-col">
+                <div class="flex flex-wrap gap-5">
+                  <div class="flex flex-col">
+                    <label for="firstName">First Name</label>
+                    <input
+                      type="text"
+                      name="firstName"
+                      id="firstName"
+                      placeholder="John"
+                    />
+                  </div>
+                  <div class="flex flex-col">
+                    <label for="lastName">Last Name</label>
+                    <input
+                      type="text"
+                      name="lastName"
+                      id="lastName"
+                      placeholder="Doe"
+                    />
+                  </div>
+                </div>
+                <div class="flex gap-5">
+                  <div class="flex flex-col">
+                    <label for="email">Email</label>
+                    <input
+                      type="email"
+                      name="email"
+                      id="email"
+                      placeholder="john.doe@example.com"
+                    />
+                  </div>
+                  <div class="flex flex-col">
+                    <label for="phone">Phone</label>
+                    <input
+                      type="tel"
+                      name="phone"
+                      id="phone"
+                      placeholder="+1234567890"
+                      pattern="\+?\d*"
+                    />
+                  </div>
+                </div>
+                <div class="flex flex-col">
+                  <label for="jobTitle">Job Title</label>
+                  <input
+                    type="text"
+                    name="jobTitle"
+                    id="jobTitle"
+                    placeholder="Software Engineer"
+                  />
+                </div>
+                <div class="flex flex-col">
+                  <label for="address">Address</label>
+                  <input
+                    type="text"
+                    name="address"
+                    id="address"
+                    placeholder="123 Main St, City, Country"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="carousel-item education flex flex-col">
+              <h1>Education</h1>
+              <p>List your educational qualifications and achievements here.</p>
+              <div id="education-box" class="flex flex-col">
+                <div class="flex gap-4" id="education-item">
+                  <div class="flex flex-col">
+                    <label for="insName">Institute Name</label>
+                    <input
+                      type="text"
+                      name="insName"
+                      id="insName"
+                      placeholder="University Name"
+                    />
+                  </div>
+                  <div class="flex flex-col">
+                    <label for="degree">Degree</label>
+                    <input
+                      type="text"
+                      name="degree"
+                      id="degree"
+                      placeholder="Bachelor of Science"
+                    />
+                  </div>
+                </div>
+              </div>
+              <button id="add-education-btn" class="btn add-btn btn-primary">
+                Add Education
+              </button>
+            </div>
+
+            <div class="carousel-item skills flex flex-col">
+              <h1>Skills</h1>
+              <p>Detail your skills and rate your proficiency in each.</p>
+              <div id="skills-box" class="flex flex-col">
+                <div class="flex gap-4 skill-item">
+                  <div class="flex flex-col">
+                    <label for="skillName">Skill Name</label>
+                    <input
+                      type="text"
+                      name="skillName"
+                      id="skillName"
+                      placeholder="JavaScript"
+                    />
+                  </div>
+                  <div class="flex flex-col">
+                    <label for="skillRate">Rating (1-5)</label>
+                    <input
+                      type="number"
+                      name="skillRate"
+                      id="skillRate"
+                      min="1"
+                      max="5"
+                      placeholder="5"
+                    />
+                  </div>
+                </div>
+              </div>
+              <button id="add-skill-btn" class="btn add-btn btn-primary">
+                Add Skill
+              </button>
+            </div>
+
+            <div class="carousel-item professional-experience flex flex-col">
+              <h1>Professional Experience</h1>
+              <p>
+                Describe your work experience and key responsibilities in
+                previous roles.
+              </p>
+              <div id="experience-box" class="flex flex-col">
+                <div class="flex flex-col gap-4 experience-item">
+                  <div class="flex gap-4">
+                    <div class="flex flex-col">
+                      <label for="positionTitle">Position Title</label>
+                      <input
+                        type="text"
+                        name="positionTitle"
+                        id="positionTitle"
+                        placeholder="Senior Developer"
+                      />
+                    </div>
+                    <div class="flex flex-col">
+                      <label for="companyName">Company Name</label>
+                      <input
+                        type="text"
+                        name="companyName"
+                        id="companyName"
+                        placeholder="Tech Corp"
+                      />
+                    </div>
+                  </div>
+                  <div class="flex gap-4">
+                    <div class="flex flex-col">
+                      <label for="city">City</label>
+                      <input
+                        type="text"
+                        name="city"
+                        id="city"
+                        placeholder="New York"
+                      />
+                    </div>
+                    <div class="flex flex-col">
+                      <label for="state">State</label>
+                      <input
+                        type="text"
+                        name="state"
+                        id="state"
+                        placeholder="NY"
+                      />
+                    </div>
+                  </div>
+                  <div class="flex flex-col">
+                    <label for="experience-summary"
+                      >Summary of Responsibilities</label
+                    >
+                    <textarea
+                      name="experience-summary"
+                      id="experience-summary"
+                      rows="4"
+                      placeholder="Describe your key responsibilities and achievements..."
+                    ></textarea>
+                  </div>
+                </div>
+              </div>
+              <button id="add-experience-btn" class="btn add-btn btn-primary">
+                Add Experience
+              </button>
+            </div>
+
+            <div class="carousel-item summary flex flex-col">
+              <h1>Summary</h1>
+              <p>
+                Provide a brief overview of your professional background and
+                career goals.
+              </p>
+              <div class="flex flex-col">
+                <label for="summary">Summary</label>
+                <textarea
+                  name="summary"
+                  id="summary"
+                  cols="30"
+                  rows="10"
+                  placeholder="A brief summary about yourself..."
+                ></textarea>
+                <button type="submit" id="generate-btn" class="btn btn-primary">
+                  Generate Resume
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </section>
+
+    <script src="/script.js"></script>
+    <script src="/form.js"></script>
+    <script src="resume.js"></script>
+    <script></script>
+  </body>
+</html>
+"

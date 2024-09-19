@@ -1,0 +1,121 @@
+/* Carousel Container */
+.carousel-container {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  max-width: 1200px; /* Max width for larger screens */
+  margin: auto;
+  background-color: #f9f9f9; /* Slightly different background for better contrast */
+  border-radius: 15px; /* More pronounced rounded corners */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Enhanced shadow for depth */
+}
+
+/* Carousel Box */
+.carousel-box {
+  display: flex;
+  transition: transform 0.5s ease-in-out; /* Smooth transition */
+}
+
+/* Carousel Items */
+.carousel-item {
+  min-width: 100%;
+  box-sizing: border-box;
+  padding: 30px;
+  background-color: #fff; /* White background for each item */
+  border-radius: 15px; /* Rounded corners */
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* Carousel Item Headers and Text */
+.carousel-item h1 {
+  font-size: 1.75rem; /* Larger header */
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.carousel-item p {
+  font-size: 1.1rem; /* Slightly larger text */
+  color: #666;
+  margin-bottom: 25px;
+}
+
+/* Form and Input Styling */
+input[type="text"],
+input[type="number"],
+input[type="tel"],
+input[type="email"],
+textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+  font-size: 1rem; /* Larger font size for readability */
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="phone"]:focus,
+input[type="email"]:focus,
+textarea:focus {
+  border-color: #007bff; /* Focused border color */
+  outline: none;
+  box-shadow: 0 0 4px rgba(0, 123, 255, 0.5); /* Subtle shadow on focus */
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .carousel-item {
+    padding: 20px; /* Reduced padding on medium screens */
+  }
+
+  .carousel-btn {
+    width: 45px;
+    height: 45px;
+    font-size: 1.75rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .carousel-item {
+    padding: 15px; /* Further reduced padding on smaller screens */
+  }
+
+  .carousel-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .carousel-item {
+    padding: 10px; /* Minimal padding on very small screens */
+  }
+
+  .carousel-btn {
+    width: 35px;
+    height: 35px;
+    font-size: 1.25rem;
+  }
+}
+
+.image {
+  background: rgb(130, 12, 255);
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 700;
+  max-width: 180px;
+  margin: auto;
+}
+
+.image i {
+  font-size: 20px;
+}
