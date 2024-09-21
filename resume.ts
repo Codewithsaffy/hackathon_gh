@@ -1,13 +1,53 @@
-const selectElement = <T extends HTMLElement>(selector: string): T | null =>
-  document.querySelector(selector) as T | null;
+
+const selectElement = (selector: string): HTMLElement | null => document.querySelector(selector);
+
+const getId = (): string | null => {
+  const urlParams = new URLSearchParams(window.location.search);
+  return urlParams.get("id");
+};
+
+interface Education {
+  insName: string;
+  degree: string;
+}
+
+interface Skill {
+  skillName: string;
+  skillRate: number;
+}
+
+interface Experience {
+  positionTitle: string;
+  companyName: string;
+  city: string;
+  state: string;
+  summary: string;
+}
+
+interface PersonalDetails {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  jobTitle: string;
+  address: string;
+}
+
+interface ResumeData {
+  personalDetails: PersonalDetails;
+  education: Education[];
+  skills: Skill[];
+  experience: Experience[];
+  summary: string;
+}
 
 const editFormData = (data: ResumeData): void => {
-  const firstNameInput = selectElement<HTMLInputElement>("#firstName");
-  const lastNameInput = selectElement<HTMLInputElement>("#lastName");
-  const emailInput = selectElement<HTMLInputElement>("#email");
-  const phoneInput = selectElement<HTMLInputElement>("#phone");
-  const jobTitleInput = selectElement<HTMLInputElement>("#jobTitle");
-  const addressInput = selectElement<HTMLInputElement>("#address");
+  const firstNameInput = selectElement("#firstName") as HTMLInputElement;
+  const lastNameInput = selectElement("#lastName") as HTMLInputElement;
+  const emailInput = selectElement("#email") as HTMLInputElement;
+  const phoneInput = selectElement("#phone") as HTMLInputElement;
+  const jobTitleInput = selectElement("#jobTitle") as HTMLInputElement;
+  const addressInput = selectElement("#address") as HTMLInputElement;
 
   if (firstNameInput) firstNameInput.value = data.personalDetails.firstName;
   if (lastNameInput) lastNameInput.value = data.personalDetails.lastName;
@@ -16,7 +56,7 @@ const editFormData = (data: ResumeData): void => {
   if (jobTitleInput) jobTitleInput.value = data.personalDetails.jobTitle;
   if (addressInput) addressInput.value = data.personalDetails.address;
 
-  const educationForm = selectElement<HTMLDivElement>("#education-box");
+  const educationForm = selectElement("#education-box");
   if (educationForm) {
     educationForm.innerHTML = ""; // Clear existing entries
     data.education.forEach((edu) => {
@@ -35,7 +75,7 @@ const editFormData = (data: ResumeData): void => {
     });
   }
 
-  const skillsForm = selectElement<HTMLDivElement>("#skills-box");
+  const skillsForm = selectElement("#skills-box");
   if (skillsForm) {
     skillsForm.innerHTML = "";
     data.skills.forEach((skill) => {
@@ -54,7 +94,7 @@ const editFormData = (data: ResumeData): void => {
     });
   }
 
-  const experienceForm = selectElement<HTMLDivElement>("#experience-box");
+  const experienceForm = selectElement("#experience-box");
   if (experienceForm) {
     experienceForm.innerHTML = "";
     data.experience.forEach((exp) => {
@@ -89,42 +129,33 @@ const editFormData = (data: ResumeData): void => {
     });
   }
 
-  const summaryInput = selectElement<HTMLTextAreaElement>("#summary");
+  const summaryInput = selectElement("#summary") as HTMLTextAreaElement;
   if (summaryInput) summaryInput.value = data.summary;
 };
 
 window.addEventListener("load", () => {
-  const savedData = localStorage.getItem("form");
+  const savedData = localStorage.getItem(`resume_${getId()}`);
   if (savedData) {
     const data: ResumeData = JSON.parse(savedData);
     editFormData(data);
+  } else {
+    console.log("No resume data found in localStorage.");
   }
-  console.log("hello world");
 });
 
-const resumeDataString = localStorage.getItem("form");
-
+const resumeDataString = localStorage.getItem(`resume_${getId()}`);
 if (resumeDataString) {
   const resume: ResumeData = JSON.parse(resumeDataString);
-
-  console.log(resume.personalDetails);
-  document.getElementById(
-    "name"
-  )!.textContent = `${resume.personalDetails.firstName} ${resume.personalDetails.lastName}`;
-  document.getElementById("jobtitle")!.textContent =
-    resume.personalDetails.jobTitle;
-  document.getElementById("address")!.textContent =
-    resume.personalDetails.address;
-  document.querySelector("#email span")!.textContent =
-    resume.personalDetails.email;
-
+  document.getElementById("name")!.textContent = `${resume.personalDetails.firstName} ${resume.personalDetails.lastName}`;
+  document.getElementById("jobtitle")!.textContent = resume.personalDetails.jobTitle;
+  document.getElementById("address")!.textContent = resume.personalDetails.address;
+  document.querySelector("#email span")!.textContent = resume.personalDetails.email;
   document.getElementById("summary")!.textContent = resume.summary;
 
   const experienceContainer = document.getElementById("experienceContainer")!;
   resume.experience.forEach((exp) => {
     const expDiv = document.createElement("div");
     expDiv.classList.add("experience");
-
     expDiv.innerHTML = `
       <h3>${exp.positionTitle}</h3>
       <p>${exp.companyName}, ${exp.city}, ${exp.state}</p>
@@ -137,7 +168,6 @@ if (resumeDataString) {
   resume.education.forEach((edu) => {
     const eduDiv = document.createElement("div");
     eduDiv.classList.add("education");
-
     eduDiv.innerHTML = `
       <h3>${edu.degree}</h3>
       <p>${edu.insName}</p>
@@ -149,11 +179,10 @@ if (resumeDataString) {
   resume.skills.forEach((skill) => {
     const skillDiv = document.createElement("div");
     skillDiv.classList.add("skill-bar");
-
     skillDiv.innerHTML = `
       <span>${skill.skillName}</span>
       <div class="progress">
-        <span style="width: ${skill.skillRate * 20}%"></span>
+        <span style="width: ${skill.skillRate * 10}%"></span>
       </div>
     `;
     skillsContainer.appendChild(skillDiv);
@@ -162,31 +191,44 @@ if (resumeDataString) {
   console.error("No resume data found in localStorage.");
 }
 
-const editBtn = document.getElementById("edit") as HTMLButtonElement;
-
+const editBtn = document.getElementById("edit")!;
 editBtn.addEventListener("click", () => {
   console.log("edit");
-  window.location.href = "generateResume.html";
+  window.location.href = `generateResume.html?id=${getId()}`;
 });
 
-const printBtn = document.getElementById("print-btn") as HTMLButtonElement;
-
+const printBtn = document.getElementById("print-btn")!;
 printBtn.addEventListener("click", () => {
   window.print();
 });
 
 const imageInput = document.getElementById("image") as HTMLInputElement;
-const profileImage = document.getElementById(
-  "profileImage"
-) as HTMLInputElement;
-const profileText = document.getElementById("profileText") as HTMLInputElement;
+const profileImage = document.getElementById("profileImage") as HTMLImageElement;
+const profileText = document.getElementById("profileText") as HTMLElement;
 
-imageInput.addEventListener("change", (event: any) => {
-  const file = event.target.files[0];
+imageInput.addEventListener("change", (event) => {
+  const file = (event.target as HTMLInputElement).files?.[0];
   if (file) {
     const imageUrl = URL.createObjectURL(file);
     profileText.style.display = "none";
     profileImage.src = imageUrl;
     profileImage.style.display = "block";
+  }
+});
+
+const shareBtn = document.getElementById("share")!;
+shareBtn.addEventListener("click", async () => {
+  const resumeUrl = window.location.href;
+  const shareData = {
+    title: "My Resume",
+    text: "Check out my resume!",
+    url: resumeUrl,
+  };
+
+  try {
+    await navigator.share(shareData);
+    console.log("Share successful");
+  } catch (error) {
+    console.error("Share failed", error);
   }
 });

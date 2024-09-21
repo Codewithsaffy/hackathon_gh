@@ -4,22 +4,33 @@ const educationForm = document.getElementById("education-box");
 const skillsForm = document.getElementById("skills-box");
 const experienceForm = document.getElementById("experience-box");
 const summaryTextArea = document.getElementById("summary");
+const seeResume = document.getElementsByClassName("see-resume");
+console.log(seeResume);
+// Function to get input value by selector
 const getInputValue = (selector) => {
   const input = document.querySelector(selector);
   return input ? input.value.trim() : "";
 };
+
+// Function to get textarea value by selector
 const getTextAreaValue = (selector) => {
   const textarea = document.querySelector(selector);
   return textarea ? textarea.value.trim() : "";
 };
+
+// Function to validate email
 const isValidEmail = (email) => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
 };
+
+// Function to validate phone
 const isValidPhone = (phone) => {
   const phoneRegex = /^[\d\s()+-]{7,15}$/;
   return phoneRegex.test(phone);
 };
+
+// Collect education data from form
 const collectEducationData = () => {
   return Array.from(educationForm.querySelectorAll(".flex.gap-4")).map(
     (item) => ({
@@ -28,6 +39,8 @@ const collectEducationData = () => {
     })
   );
 };
+
+// Collect skill data from form
 const collectSkillData = () => {
   return Array.from(skillsForm.querySelectorAll(".flex.gap-4")).map((item) => ({
     skillName: item.querySelector('[name="skillName"]').value.trim(),
@@ -37,6 +50,8 @@ const collectSkillData = () => {
     ),
   }));
 };
+
+// Collect experience data from form
 const collectExperienceData = () => {
   return Array.from(
     experienceForm.querySelectorAll(".flex.flex-col.gap-4")
@@ -48,13 +63,18 @@ const collectExperienceData = () => {
     summary: item.querySelector('[name="experience-summary"]').value.trim(),
   }));
 };
-function generateUniqueId() {
-  const timestamp = Date.now().toString(36); // Convert timestamp to base-36
-  const randomNum = Math.random().toString(36).substring(2); // Random base-36 number
-  return timestamp + randomNum; // Combine the two for a unique ID
-}
+
+// Function to generate a unique ID for the resume
+const generateUniqueId = () => {
+  return Math.random().toString(36).substring(2, 10);
+};
+
+// Function to load resume from URL
+
+// Add event listener for form submission
 form.addEventListener("submit", (event) => {
   event.preventDefault();
+
   const personalDetails = {
     firstName: getInputValue("#firstName"),
     lastName: getInputValue("#lastName"),
@@ -63,10 +83,12 @@ form.addEventListener("submit", (event) => {
     jobTitle: getInputValue("#jobTitle"),
     address: getInputValue("#address"),
   };
+
   const educationItems = collectEducationData();
   const skillItems = collectSkillData();
   const experienceItems = collectExperienceData();
   const summary = getTextAreaValue("#summary");
+
   const errors = [];
   if (!personalDetails.firstName) errors.push("First name is required.");
   if (!personalDetails.lastName) errors.push("Last name is required.");
@@ -116,11 +138,14 @@ form.addEventListener("submit", (event) => {
         `Experience summary is required for experience entry ${index + 1}.`
       );
   });
+
   if (!summary) errors.push("Summary is required.");
+
   if (errors.length > 0) {
     alert("Please fix the following errors:\n" + errors.join("\n"));
     return;
   }
+
   const formData = {
     personalDetails,
     education: educationItems,
@@ -128,9 +153,12 @@ form.addEventListener("submit", (event) => {
     experience: experienceItems,
     summary,
   };
-  // const uid = generateUniqueId();
-  console.log("Form Data:", formData);
-  
-  localStorage.setItem("form", JSON.stringify(formData));
-  window.location.href = "/pages/resume.html";
+
+  const resumeID = generateUniqueId();
+
+  localStorage.setItem(`resume_${resumeID}`, JSON.stringify(formData));
+
+  const shareableURL = `${window.location.origin}/pages/resume.html?id=${resumeID}`;
+  console.log("Shareable URL:", shareableURL);
 });
+

@@ -1,5 +1,12 @@
-"use strict";
-// Define interfaces for the data structures
+const form = document.querySelector("form") as HTMLFormElement;
+const educationForm = document.getElementById("education-box") as HTMLElement;
+const skillsForm = document.getElementById("skills-box") as HTMLElement;
+const experienceForm = document.getElementById("experience-box") as HTMLElement;
+const summaryTextArea = document.getElementById(
+  "summary"
+) as HTMLTextAreaElement;
+const seeResume = document.getElementsByClassName("see-resume");
+
 interface PersonalDetails {
   firstName: string;
   lastName: string;
@@ -27,7 +34,7 @@ interface ExperienceItem {
   summary: string;
 }
 
-interface ResumeData {
+interface Data {
   personalDetails: PersonalDetails;
   education: EducationItem[];
   skills: SkillItem[];
@@ -35,39 +42,31 @@ interface ResumeData {
   summary: string;
 }
 
-const form = document.querySelector("form") as HTMLFormElement;
-
-const educationForm = document.getElementById(
-  "education-box"
-) as HTMLDivElement;
-const skillsForm = document.getElementById("skills-box") as HTMLDivElement;
-const experienceForm = document.getElementById(
-  "experience-box"
-) as HTMLDivElement;
-const summaryTextArea = document.getElementById(
-  "summary"
-) as HTMLTextAreaElement;
-
+// Function to get input value by selector
 const getInputValue = (selector: string): string => {
   const input = document.querySelector(selector) as HTMLInputElement;
   return input ? input.value.trim() : "";
 };
 
+// Function to get textarea value by selector
 const getTextAreaValue = (selector: string): string => {
   const textarea = document.querySelector(selector) as HTMLTextAreaElement;
   return textarea ? textarea.value.trim() : "";
 };
 
+// Function to validate email
 const isValidEmail = (email: string): boolean => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
 };
 
+// Function to validate phone
 const isValidPhone = (phone: string): boolean => {
   const phoneRegex = /^[\d\s()+-]{7,15}$/;
   return phoneRegex.test(phone);
 };
 
+// Collect education data from form
 const collectEducationData = (): EducationItem[] => {
   return Array.from(educationForm.querySelectorAll(".flex.gap-4")).map(
     (item) => ({
@@ -81,6 +80,7 @@ const collectEducationData = (): EducationItem[] => {
   );
 };
 
+// Collect skill data from form
 const collectSkillData = (): SkillItem[] => {
   return Array.from(skillsForm.querySelectorAll(".flex.gap-4")).map((item) => ({
     skillName: (
@@ -95,6 +95,7 @@ const collectSkillData = (): SkillItem[] => {
   }));
 };
 
+// Collect experience data from form
 const collectExperienceData = (): ExperienceItem[] => {
   return Array.from(
     experienceForm.querySelectorAll(".flex.flex-col.gap-4")
@@ -116,13 +117,14 @@ const collectExperienceData = (): ExperienceItem[] => {
     ).value.trim(),
   }));
 };
-function generateUniqueId() {
-  const timestamp = Date.now().toString(36); // Convert timestamp to base-36
-  const randomNum = Math.random().toString(36).substring(2); // Random base-36 number
-  return timestamp + randomNum; // Combine the two for a unique ID
-}
 
-form.addEventListener("submit", (event: Event) => {
+// Function to generate a unique ID for the resume
+const generateUniqueId = (): string => {
+  return Math.random().toString(36).substring(2, 10);
+};
+
+// Add event listener for form submission
+form.addEventListener("submit", (event) => {
   event.preventDefault();
 
   const personalDetails: PersonalDetails = {
@@ -140,7 +142,6 @@ form.addEventListener("submit", (event: Event) => {
   const summary = getTextAreaValue("#summary");
 
   const errors: string[] = [];
-
   if (!personalDetails.firstName) errors.push("First name is required.");
   if (!personalDetails.lastName) errors.push("Last name is required.");
   if (!personalDetails.email || !isValidEmail(personalDetails.email))
@@ -149,7 +150,6 @@ form.addEventListener("submit", (event: Event) => {
     errors.push("A valid phone number is required.");
   if (!personalDetails.jobTitle) errors.push("Job title is required.");
   if (!personalDetails.address) errors.push("Address is required.");
-
   if (educationItems.length === 0)
     errors.push("At least one education entry is required.");
   educationItems.forEach((item, index) => {
@@ -160,7 +160,6 @@ form.addEventListener("submit", (event: Event) => {
     if (!item.degree)
       errors.push(`Degree is required for education entry ${index + 1}.`);
   });
-
   if (skillItems.length === 0)
     errors.push("At least one skill entry is required.");
   skillItems.forEach((item, index) => {
@@ -171,7 +170,6 @@ form.addEventListener("submit", (event: Event) => {
         `Skill rate must be between 1 and 10 for skill entry ${index + 1}.`
       );
   });
-
   if (experienceItems.length === 0)
     errors.push("At least one experience entry is required.");
   experienceItems.forEach((item, index) => {
@@ -200,15 +198,18 @@ form.addEventListener("submit", (event: Event) => {
     return;
   }
 
-  const formData: ResumeData = {
+  const formData: Data = {
     personalDetails,
     education: educationItems,
     skills: skillItems,
     experience: experienceItems,
     summary,
   };
-  // const uid = generateUniqueId();
-  console.log("Form Data:", formData);
-  localStorage.setItem("form", JSON.stringify(formData));
-  window.location.href = "/pages/resume.html";
+
+  const resumeID = generateUniqueId();
+
+  localStorage.setItem(`resume_${resumeID}`, JSON.stringify(formData));
+
+  const shareableURL = `${window.location.origin}/pages/resume.html?id=${resumeID}`;
+  console.log("Shareable URL:", shareableURL);
 });
