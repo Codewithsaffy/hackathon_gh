@@ -130,6 +130,7 @@ form.addEventListener("submit", (event) => {
   };
   // const uid = generateUniqueId();
   console.log("Form Data:", formData);
+  
   localStorage.setItem("form", JSON.stringify(formData));
   window.location.href = "/pages/resume.html";
 });

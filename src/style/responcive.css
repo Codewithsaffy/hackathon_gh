@@ -23,6 +23,19 @@
   .subNav {
     width: 90%;
   }
+  .see-resume {
+    padding: 10px 20px;
+    background-color: green;
+    color: white;
+    font-weight: 700;
+    border-radius: 20px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
+    justify-content: center;
+    text-decoration: none;
+  }
 }
 
 @media (min-width: 640px) {
@@ -43,6 +56,9 @@
 @media (min-width: 1024px) {
   .container {
     width: 60%;
+  }
+  .see-resume{
+    display: none;
   }
 }
 
