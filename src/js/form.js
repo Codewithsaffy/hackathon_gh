@@ -160,5 +160,5 @@ form.addEventListener("submit", (event) => {
 
   const shareableURL = `${window.location.origin}/pages/resume.html?id=${resumeID}`;
   console.log("Shareable URL:", shareableURL);
+  window.location.href = shareableURL;
 });
-
