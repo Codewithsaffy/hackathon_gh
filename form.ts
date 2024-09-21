@@ -210,5 +210,5 @@ form.addEventListener("submit", (event: Event) => {
   // const uid = generateUniqueId();
   console.log("Form Data:", formData);
   localStorage.setItem("form", JSON.stringify(formData));
-  window.location.href = "resume.html";
+  window.location.href = "/pages/resume.html";
 });

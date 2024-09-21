@@ -19,33 +19,41 @@
     padding: 1rem 2.5rem;
   }
 }
+@media (min-width: 236px) {
+  .subNav {
+    width: 90%;
+  }
+}
 
 @media (min-width: 640px) {
   .container {
     max-width: 100%; /* Small devices (640px and up) */
   }
+  .subNav {
+    width: 100%;
+  }
 }
 
 @media (min-width: 768px) {
   .container {
-    max-width: 90%; /* Medium devices (768px and up) */
+    max-width: 90%;
   }
 }
 
 @media (min-width: 1024px) {
   .container {
-    width: 60%; /* Large devices (1024px and up) */
+    width: 60%;
   }
 }
 
 @media (min-width: 1280px) {
   .container {
-    width: 800px; /* Extra-large devices (1280px and up) */
+    width: 800px;
   }
 }
 
 @media (min-width: 1536px) {
   .container {
-    max-width: 50%px; /* 2XL devices (1536px and up) */
+    max-width: 50%px;
   }
 }

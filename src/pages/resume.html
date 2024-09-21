@@ -24,12 +24,11 @@
         justify-content: center;
         align-items: center;
         min-height: 100vh;
-        padding: 20px;
+        /* padding: 20px; */
       }
 
       .main {
-        width: 100%;
-        max-width: 800px;
+        width: 100vw;
         background-color: white;
         padding: 30px;
         border-radius: 12px;
@@ -40,21 +39,23 @@
 
       .button-main {
         display: flex;
-        justify-content: flex-end;
+        justify-content: center;
+        gap: 2px;
         margin-bottom: 30px;
       }
 
       .button-main button {
-        padding: 12px 24px;
-        font-size: 1.1em;
+        padding: 8px 20px;
+        font-size: 1em;
         border: none;
         border-radius: 6px;
         cursor: pointer;
         transition: background-color 0.3s ease, transform 0.2s ease;
         display: flex;
         align-items: center;
-        justify-content: center;
-        margin-left: 10px;
+        /* width: 100%; */
+        justify-content: space-between;
+        /* margin-left: 10px; */
         font-weight: 600;
       }
 
@@ -150,16 +151,6 @@
         position: relative;
       }
 
-      .section h2::after {
-        content: "";
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 50px;
-        height: 2px;
-        background-color: #007bff;
-      }
-
       .section p {
         line-height: 1.6;
         margin-bottom: 15px;
@@ -192,19 +183,28 @@
       .skill-bar span.print-hidden {
         display: none;
       }
+      @media (max-width: 320px) {
+    
+        .button-main p {
+          display: none;
+        }
+      }
     </style>
   </head>
   <body>
     <div class="main">
       <div class="button-main">
         <button class="edit-button hidden-print" id="edit">
-          <i class="fa fa-edit"></i>Edit
+          <i class="fa fa-edit"></i>
+          <p>Edit</p>
         </button>
         <button class="share-button hidden-print" id="share">
-          <i class="fa fa-share-alt"></i>Share
+          <i class="fa fa-share-alt"></i>
+          <p>Share</p>
         </button>
         <button class="print-button hidden-print" id="print-btn">
-          <i class="fa fa-print"></i>Print
+          <i class="fa fa-print"></i>
+          <p>Print</p>
         </button>
       </div>
 

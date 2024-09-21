@@ -12,8 +12,8 @@ const experienceBox = document.getElementById("experience-box");
 let count = 0;
 // Update navigation buttons for carousel based on count
 const updateButtonsVisibility = () => {
-    backBtn.style.display = count === 0 ? "none" : "block";
-    nextBtn.style.display = count === 4 ? "none" : "block";
+    backBtn.style.display = count === 0 ? "none" : "flex";
+    nextBtn.style.display = count === 4 ? "none" : "flex";
 };
 updateButtonsVisibility();
 // Carousel navigation handlers
