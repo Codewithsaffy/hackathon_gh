@@ -1,4 +1,3 @@
-
 const selectElement = (selector: string): HTMLElement | null => document.querySelector(selector);
 
 const getId = (): string | null => {
@@ -58,7 +57,7 @@ const editFormData = (data: ResumeData): void => {
 
   const educationForm = selectElement("#education-box");
   if (educationForm) {
-    educationForm.innerHTML = ""; // Clear existing entries
+    educationForm.innerHTML = "";
     data.education.forEach((edu) => {
       educationForm.innerHTML += `
         <div class="flex gap-4">
@@ -134,71 +133,62 @@ const editFormData = (data: ResumeData): void => {
 };
 
 window.addEventListener("load", () => {
-  const savedData = localStorage.getItem(`resume_${getId()}`);
-  if (savedData) {
-    const data: ResumeData = JSON.parse(savedData);
+  const resumeDataString = localStorage.getItem(`resume_${getId()}`);
+  if (resumeDataString) {
+    const data: ResumeData = JSON.parse(resumeDataString);
     editFormData(data);
+
+    document.getElementById("name")!.textContent = `${data.personalDetails.firstName} ${data.personalDetails.lastName}`;
+    document.getElementById("jobtitle")!.textContent = data.personalDetails.jobTitle;
+    document.getElementById("address")!.textContent = data.personalDetails.address;
+    document.querySelector("#email span")!.textContent = data.personalDetails.email;
+    document.getElementById("summary")!.textContent = data.summary;
+
+    const experienceContainer = document.getElementById("experienceContainer")!;
+    data.experience.forEach((exp) => {
+      const expDiv = document.createElement("div");
+      expDiv.classList.add("experience");
+      expDiv.innerHTML = `
+        <h3>${exp.positionTitle}</h3>
+        <p>${exp.companyName}, ${exp.city}, ${exp.state}</p>
+        <p>${exp.summary}</p>
+      `;
+      experienceContainer.appendChild(expDiv);
+    });
+
+    const educationContainer = document.getElementById("educationContainer")!;
+    data.education.forEach((edu) => {
+      const eduDiv = document.createElement("div");
+      eduDiv.classList.add("education");
+      eduDiv.innerHTML = `
+        <h3>${edu.degree}</h3>
+        <p>${edu.insName}</p>
+      `;
+      educationContainer.appendChild(eduDiv);
+    });
+
+    const skillsContainer = document.getElementById("skillsContainer")!;
+    data.skills.forEach((skill) => {
+      const skillDiv = document.createElement("div");
+      skillDiv.classList.add("skill-bar");
+      skillDiv.innerHTML = `
+        <span>${skill.skillName}</span>
+        <div class="progress">
+          <span style="width: ${skill.skillRate * 10}%"></span>
+        </div>
+      `;
+      skillsContainer.appendChild(skillDiv);
+    });
   } else {
-    console.log("No resume data found in localStorage.");
+    console.error("No resume data found in localStorage.");
   }
 });
 
-const resumeDataString = localStorage.getItem(`resume_${getId()}`);
-if (resumeDataString) {
-  const resume: ResumeData = JSON.parse(resumeDataString);
-  document.getElementById("name")!.textContent = `${resume.personalDetails.firstName} ${resume.personalDetails.lastName}`;
-  document.getElementById("jobtitle")!.textContent = resume.personalDetails.jobTitle;
-  document.getElementById("address")!.textContent = resume.personalDetails.address;
-  document.querySelector("#email span")!.textContent = resume.personalDetails.email;
-  document.getElementById("summary")!.textContent = resume.summary;
-
-  const experienceContainer = document.getElementById("experienceContainer")!;
-  resume.experience.forEach((exp) => {
-    const expDiv = document.createElement("div");
-    expDiv.classList.add("experience");
-    expDiv.innerHTML = `
-      <h3>${exp.positionTitle}</h3>
-      <p>${exp.companyName}, ${exp.city}, ${exp.state}</p>
-      <p>${exp.summary}</p>
-    `;
-    experienceContainer.appendChild(expDiv);
-  });
-
-  const educationContainer = document.getElementById("educationContainer")!;
-  resume.education.forEach((edu) => {
-    const eduDiv = document.createElement("div");
-    eduDiv.classList.add("education");
-    eduDiv.innerHTML = `
-      <h3>${edu.degree}</h3>
-      <p>${edu.insName}</p>
-    `;
-    educationContainer.appendChild(eduDiv);
-  });
-
-  const skillsContainer = document.getElementById("skillsContainer")!;
-  resume.skills.forEach((skill) => {
-    const skillDiv = document.createElement("div");
-    skillDiv.classList.add("skill-bar");
-    skillDiv.innerHTML = `
-      <span>${skill.skillName}</span>
-      <div class="progress">
-        <span style="width: ${skill.skillRate * 10}%"></span>
-      </div>
-    `;
-    skillsContainer.appendChild(skillDiv);
-  });
-} else {
-  console.error("No resume data found in localStorage.");
-}
-
-const editBtn = document.getElementById("edit")!;
-editBtn.addEventListener("click", () => {
-  console.log("edit");
+document.getElementById("edit")!.addEventListener("click", () => {
   window.location.href = `generateResume.html?id=${getId()}`;
 });
 
-const printBtn = document.getElementById("print-btn")!;
-printBtn.addEventListener("click", () => {
+document.getElementById("print-btn")!.addEventListener("click", () => {
   window.print();
 });
 
@@ -227,7 +217,6 @@ shareBtn.addEventListener("click", async () => {
 
   try {
     await navigator.share(shareData);
-    console.log("Share successful");
   } catch (error) {
     console.error("Share failed", error);
   }
