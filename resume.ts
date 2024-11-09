@@ -58,17 +58,17 @@ const editFormData = (data: ResumeData): void => {
 
   const educationForm = selectElement("#education-box");
   if (educationForm) {
-    educationForm.innerHTML = ""; // Clear existing entries
-    data.education.map((edu) => {
+    educationForm.innerHTML = ""; 
+    data.education.forEach((edu) => {
       educationForm.innerHTML += `
         <div class="flex gap-4">
           <div class="flex flex-col">
             <label for="insName">Institute Name</label>
-            <input type="text" name="insName" value="${edu.insName}" placeholder="Institution Name" required />
+            <input type="text" name="insName" value="${edu.insName}" required />
           </div>
           <div class="flex flex-col">
             <label for="degree">Degree</label>
-            <input type="text" name="degree" value="${edu.degree}" placeholder="Degree" required />
+            <input type="text" name="degree" value="${edu.degree}" required />
           </div>
         </div>
       `;
@@ -77,17 +77,17 @@ const editFormData = (data: ResumeData): void => {
 
   const skillsForm = selectElement("#skills-box");
   if (skillsForm) {
-    skillsForm.innerHTML = "";
-    data.skills.map((skill) => {
-      skillsForm.innerHTML = `
+    skillsForm.innerHTML = ""; 
+    data.skills.forEach((skill) => {
+      skillsForm.innerHTML += `
         <div class="flex gap-4">
           <div class="flex flex-col">
             <label for="skillName">Skill Name</label>
-            <input type="text" name="skillName" value="${skill.skillName}" placeholder="Skill Name" required />
+            <input type="text" name="skillName" value="${skill.skillName}" required />
           </div>
           <div class="flex flex-col">
             <label for="skillRate">Rating (1-10)</label>
-            <input type="number" name="skillRate" value="${skill.skillRate}" placeholder="Skill Rate (1-10)" min="1" max="10" required />
+            <input type="number" name="skillRate" value="${skill.skillRate}" min="1" max="10" required />
           </div>
         </div>
       `;
@@ -96,33 +96,33 @@ const editFormData = (data: ResumeData): void => {
 
   const experienceForm = selectElement("#experience-box");
   if (experienceForm) {
-    experienceForm.innerHTML = "";
-    data.experience.map((exp) => {
+    experienceForm.innerHTML = ""; 
+    data.experience.forEach((exp) => {
       experienceForm.innerHTML += `
         <div class="flex flex-col gap-4">
           <div class="flex gap-4">
             <div class="flex flex-col">
               <label for="positionTitle">Position Title</label>
-              <input type="text" name="positionTitle" value="${exp.positionTitle}" placeholder="Position Title" required />
+              <input type="text" name="positionTitle" value="${exp.positionTitle}" required />
             </div>
             <div class="flex flex-col">
               <label for="companyName">Company Name</label>
-              <input type="text" name="companyName" value="${exp.companyName}" placeholder="Company Name" required />
+              <input type="text" name="companyName" value="${exp.companyName}" required />
             </div>
           </div>
           <div class="flex gap-4">
             <div class="flex flex-col">
               <label for="city">City</label>
-              <input type="text" name="city" value="${exp.city}" placeholder="City" required />
+              <input type="text" name="city" value="${exp.city}" required />
             </div>
             <div class="flex flex-col">
               <label for="state">State</label>
-              <input type="text" name="state" value="${exp.state}" placeholder="State" required />
+              <input type="text" name="state" value="${exp.state}" required />
             </div>
           </div>
           <div class="flex flex-col">
-            <label for="experience-summary">Summary of Responsibilities</label>
-            <textarea name="experience-summary" placeholder="Describe your key responsibilities and achievements..." required>${exp.summary}</textarea>
+            <label for="experience-summary">Summary</label>
+            <textarea name="experience-summary" required>${exp.summary}</textarea>
           </div>
         </div>
       `;
@@ -143,99 +143,45 @@ window.addEventListener("load", () => {
   }
 });
 
-const resumeDataString = localStorage.getItem(`resume_${getId()}`);
-if (resumeDataString) {
-  const resume: ResumeData = JSON.parse(resumeDataString);
-  document.getElementById(
-    "name"
-  )!.textContent = `${resume.personalDetails.firstName} ${resume.personalDetails.lastName}`;
-  document.getElementById("jobtitle")!.textContent =
-    resume.personalDetails.jobTitle;
-  document.getElementById("address")!.textContent =
-    resume.personalDetails.address;
-  document.querySelector("#email span")!.textContent =
-    resume.personalDetails.email;
-  document.getElementById("summary")!.textContent = resume.summary;
+document.addEventListener("DOMContentLoaded", () => {
+  const editBtn = selectElement("#edit")!;
+  const printBtn = selectElement("#print-btn")!;
+  const imageInput = selectElement("#image") as HTMLInputElement;
+  const profileImage = selectElement("#profileImage") as HTMLImageElement;
+  const profileText = selectElement("#profileText") as HTMLElement;
+  const shareBtn = selectElement("#share")!;
 
-  const experienceContainer = document.getElementById("experienceContainer")!;
-  resume.experience.forEach((exp) => {
-    const expDiv = document.createElement("div");
-    expDiv.classList.add("experience");
-    expDiv.innerHTML = `
-      <h3>${exp.positionTitle}</h3>
-      <p>${exp.companyName}, ${exp.city}, ${exp.state}</p>
-      <p>${exp.summary}</p>
-    `;
-    experienceContainer.appendChild(expDiv);
+  editBtn?.addEventListener("click", () => {
+    window.location.href = `generateResume.html?id=${getId()}`;
   });
 
-  const educationContainer = document.getElementById("educationContainer")!;
-  resume.education.forEach((edu) => {
-    const eduDiv = document.createElement("div");
-    eduDiv.classList.add("education");
-    eduDiv.innerHTML = `
-      <h3>${edu.degree}</h3>
-      <p>${edu.insName}</p>
-    `;
-    educationContainer.appendChild(eduDiv);
+  printBtn?.addEventListener("click", () => {
+    window.print();
   });
 
-  const skillsContainer = document.getElementById("skillsContainer")!;
-  resume.skills.forEach((skill) => {
-    const skillDiv = document.createElement("div");
-    skillDiv.classList.add("skill-bar");
-    skillDiv.innerHTML = `
-      <span>${skill.skillName}</span>
-      <div class="progress">
-        <span style="width: ${skill.skillRate * 10}%"></span>
-      </div>
-    `;
-    skillsContainer.appendChild(skillDiv);
+  imageInput?.addEventListener("change", (event) => {
+    const file = (event.target as HTMLInputElement).files?.[0];
+    if (file) {
+      const imageUrl = URL.createObjectURL(file);
+      profileText.style.display = "none";
+      profileImage.src = imageUrl;
+      profileImage.style.display = "block";
+    }
   });
-} else {
-  console.error("No resume data found in localStorage.");
-}
 
-const editBtn = document.getElementById("edit")!;
-editBtn.addEventListener("click", () => {
-  console.log("edit");
-  window.location.href = `generateResume.html?id=${getId()}`;
-});
+  shareBtn?.addEventListener("click", async () => {
+    const resumeUrl = window.location.href;
+    const shareData = { title: "My Resume", text: "Check out my resume!", url: resumeUrl };
 
-const printBtn = document.getElementById("print-btn")!;
-printBtn.addEventListener("click", () => {
-  window.print();
-});
-
-const imageInput = document.getElementById("image") as HTMLInputElement;
-const profileImage = document.getElementById(
-  "profileImage"
-) as HTMLImageElement;
-const profileText = document.getElementById("profileText") as HTMLElement;
-
-imageInput.addEventListener("change", (event) => {
-  const file = (event.target as HTMLInputElement).files?.[0];
-  if (file) {
-    const imageUrl = URL.createObjectURL(file);
-    profileText.style.display = "none";
-    profileImage.src = imageUrl;
-    profileImage.style.display = "block";
-  }
-});
-
-const shareBtn = document.getElementById("share")!;
-shareBtn.addEventListener("click", async () => {
-  const resumeUrl = window.location.href;
-  const shareData = {
-    title: "My Resume",
-    text: "Check out my resume!",
-    url: resumeUrl,
-  };
-
-  try {
-    await navigator.share(shareData);
-    console.log("Share successful");
-  } catch (error) {
-    console.error("Share failed", error);
-  }
+    if (navigator.share) {
+      try {
+        await navigator.share(shareData);
+        console.log("Share successful");
+      } catch (error) {
+        console.error("Share failed", error);
+      }
+    } else {
+      console.error("Sharing not supported");
+    }
+  });
 });
