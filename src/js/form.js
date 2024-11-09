@@ -46,7 +46,7 @@ const collectExperienceData = () => {
         companyName: item.querySelector('[name="companyName"]').value.trim(),
         city: item.querySelector('[name="city"]').value.trim(),
         state: item.querySelector('[name="state"]').value.trim(),
-        summary: item.querySelector('[name="experience-summary"]').value.trim(),
+        summary: item.querySelector('[name="experience-summary"]').value
     }));
 };
 // Function to generate a unique ID for the resume
