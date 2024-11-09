@@ -127,5 +127,6 @@ form.addEventListener("submit", (event) => {
     const resumeID = generateUniqueId();
     localStorage.setItem(`resume_${resumeID}`, JSON.stringify(formData));
     const shareableURL = `${window.location.origin}/pages/resume.html?id=${resumeID}`;
+    window.location.href = shareableURL;
     console.log("Shareable URL:", shareableURL);
 });
