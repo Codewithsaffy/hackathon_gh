@@ -79,7 +79,7 @@ const editFormData = (data: ResumeData): void => {
   if (skillsForm) {
     skillsForm.innerHTML = "";
     data.skills.map((skill) => {
-      skillsForm.innerHTML += `
+      skillsForm.innerHTML = `
         <div class="flex gap-4">
           <div class="flex flex-col">
             <label for="skillName">Skill Name</label>
