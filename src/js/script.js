@@ -18,12 +18,9 @@ const updateButtonsVisibility = () => {
 updateButtonsVisibility();
 // Carousel navigation handlers
 nextBtn.addEventListener("click", () => {
-    console.log("next");
-    console.log(crousalBox);
     if (count < 4) {
         count++;
         crousalBox.style.transform = `translateX(-${count * 100}%)`;
-        console.log("nex");
         updateButtonsVisibility();
     }
 });
@@ -58,7 +55,7 @@ addEducationBtn.addEventListener("click", () => {
         <input type="text" name="degree" />
       </div>
     </div>
-    <button class="remove-education-btn remove-btn  mt-2">Remove</button>
+    <button class="remove-education-btn remove-btn mt-2">Remove</button>
   `;
     createItem(educationHTML, educationBox, "remove-education-btn");
 });
@@ -75,7 +72,7 @@ addSkillBtn.addEventListener("click", () => {
         <input type="number" name="skillRate" min="1" max="5" />
       </div>
     </div>
-    <button class="remove-skill-btn remove-btn  mt-2">Remove</button>
+    <button class="remove-skill-btn remove-btn mt-2">Remove</button>
   `;
     createItem(skillHTML, skillsBox, "remove-skill-btn");
 });
@@ -106,7 +103,7 @@ addExperienceBtn.addEventListener("click", () => {
       <label for="summary">Summary</label>
       <textarea name="summary" rows="4"></textarea>
     </div>
-    <button class="remove-experience-btn remove-btn  mt-2">Remove</button>
+    <button class="remove-experience-btn remove-btn mt-2">Remove</button>
   `;
     createItem(experienceHTML, experienceBox, "remove-experience-btn");
 });

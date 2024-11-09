@@ -114,7 +114,7 @@ const collectExperienceData = (): ExperienceItem[] => {
     ).value.trim(),
     summary: (
       item.querySelector('[name="experience-summary"]') as HTMLTextAreaElement
-    ).value.trim(),
+    ).value,
   }));
 };
 

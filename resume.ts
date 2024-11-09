@@ -1,5 +1,5 @@
-
-const selectElement = (selector: string): HTMLElement | null => document.querySelector(selector);
+const selectElement = (selector: string): HTMLElement | null =>
+  document.querySelector(selector);
 
 const getId = (): string | null => {
   const urlParams = new URLSearchParams(window.location.search);
@@ -59,7 +59,7 @@ const editFormData = (data: ResumeData): void => {
   const educationForm = selectElement("#education-box");
   if (educationForm) {
     educationForm.innerHTML = ""; // Clear existing entries
-    data.education.forEach((edu) => {
+    data.education.map((edu) => {
       educationForm.innerHTML += `
         <div class="flex gap-4">
           <div class="flex flex-col">
@@ -78,7 +78,7 @@ const editFormData = (data: ResumeData): void => {
   const skillsForm = selectElement("#skills-box");
   if (skillsForm) {
     skillsForm.innerHTML = "";
-    data.skills.forEach((skill) => {
+    data.skills.map((skill) => {
       skillsForm.innerHTML += `
         <div class="flex gap-4">
           <div class="flex flex-col">
@@ -97,7 +97,7 @@ const editFormData = (data: ResumeData): void => {
   const experienceForm = selectElement("#experience-box");
   if (experienceForm) {
     experienceForm.innerHTML = "";
-    data.experience.forEach((exp) => {
+    data.experience.map((exp) => {
       experienceForm.innerHTML += `
         <div class="flex flex-col gap-4">
           <div class="flex gap-4">
@@ -146,10 +146,15 @@ window.addEventListener("load", () => {
 const resumeDataString = localStorage.getItem(`resume_${getId()}`);
 if (resumeDataString) {
   const resume: ResumeData = JSON.parse(resumeDataString);
-  document.getElementById("name")!.textContent = `${resume.personalDetails.firstName} ${resume.personalDetails.lastName}`;
-  document.getElementById("jobtitle")!.textContent = resume.personalDetails.jobTitle;
-  document.getElementById("address")!.textContent = resume.personalDetails.address;
-  document.querySelector("#email span")!.textContent = resume.personalDetails.email;
+  document.getElementById(
+    "name"
+  )!.textContent = `${resume.personalDetails.firstName} ${resume.personalDetails.lastName}`;
+  document.getElementById("jobtitle")!.textContent =
+    resume.personalDetails.jobTitle;
+  document.getElementById("address")!.textContent =
+    resume.personalDetails.address;
+  document.querySelector("#email span")!.textContent =
+    resume.personalDetails.email;
   document.getElementById("summary")!.textContent = resume.summary;
 
   const experienceContainer = document.getElementById("experienceContainer")!;
@@ -203,7 +208,9 @@ printBtn.addEventListener("click", () => {
 });
 
 const imageInput = document.getElementById("image") as HTMLInputElement;
-const profileImage = document.getElementById("profileImage") as HTMLImageElement;
+const profileImage = document.getElementById(
+  "profileImage"
+) as HTMLImageElement;
 const profileText = document.getElementById("profileText") as HTMLElement;
 
 imageInput.addEventListener("change", (event) => {
