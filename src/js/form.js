@@ -46,7 +46,7 @@ const collectExperienceData = () => {
         companyName: item.querySelector('[name="companyName"]').value.trim(),
         city: item.querySelector('[name="city"]').value.trim(),
         state: item.querySelector('[name="state"]').value.trim(),
-        summary: item.querySelector('[name="experience-summary"]').value
+        summary: item.querySelector('[name="experience-summary"]').value.trim(),
     }));
 };
 // Function to generate a unique ID for the resume
@@ -127,6 +127,5 @@ form.addEventListener("submit", (event) => {
     const resumeID = generateUniqueId();
     localStorage.setItem(`resume_${resumeID}`, JSON.stringify(formData));
     const shareableURL = `${window.location.origin}/pages/resume.html?id=${resumeID}`;
-    window.location.href = shareableURL;
     console.log("Shareable URL:", shareableURL);
 });

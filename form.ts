@@ -114,7 +114,7 @@ const collectExperienceData = (): ExperienceItem[] => {
     ).value.trim(),
     summary: (
       item.querySelector('[name="experience-summary"]') as HTMLTextAreaElement
-    ).value
+    ).value.trim(),
   }));
 };
 
@@ -211,6 +211,5 @@ form.addEventListener("submit", (event) => {
   localStorage.setItem(`resume_${resumeID}`, JSON.stringify(formData));
 
   const shareableURL = `${window.location.origin}/pages/resume.html?id=${resumeID}`;
-  window.location.href = shareableURL;
   console.log("Shareable URL:", shareableURL);
 });
